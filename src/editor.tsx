@@ -112,7 +112,7 @@ interface EditorProps {
 
 export interface EditorRef {
   /** 返回内容的 html 文本，注意只包含内容文本，不包含 html 文件头 */
-  geContentHtml: () => string
+  getContentHtml: () => string
 }
 
 // Editor is a controlled React component
@@ -123,7 +123,7 @@ const Editor = forwardRef<EditorRef, EditorProps>(
     const quillRef = useRef<Quill | null>(null)
 
     useImperativeHandle(ref, () => ({
-      geContentHtml: () => {
+      getContentHtml: () => {
         return quillRef.current?.root.innerHTML || ''
       },
     }))

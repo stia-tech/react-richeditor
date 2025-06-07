@@ -79,7 +79,7 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
     const onChangeRef = useRef(onChange);
     const quillRef = useRef(null);
     useImperativeHandle(ref, ()=>({
-            geContentHtml: ()=>quillRef.current?.root.innerHTML || ''
+            getContentHtml: ()=>quillRef.current?.root.innerHTML || ''
         }));
     useLayoutEffect(()=>{
         onChangeRef.current = onChange;

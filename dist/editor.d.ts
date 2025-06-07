@@ -15,7 +15,7 @@ interface EditorProps {
 }
 export interface EditorRef {
     /** 返回内容的 html 文本，注意只包含内容文本，不包含 html 文件头 */
-    geContentHtml: () => string;
+    getContentHtml: () => string;
 }
 declare const Editor: import("react").ForwardRefExoticComponent<EditorProps & import("react").RefAttributes<EditorRef>>;
 export default Editor;
