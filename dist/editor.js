@@ -71,10 +71,8 @@ const Image = external_quill_default["import"]('formats/image');
 Image.sanitize = (url)=>url;
 external_quill_default.register('formats/image', Image);
 const Video = external_quill_default["import"]('formats/video');
-Video.sanitize = (url)=>url;
 external_quill_default.register('formats/video', Video);
 const Document = external_quill_default["import"]('formats/document');
-Document.sanitize = (url)=>url;
 external_quill_default.register('formats/document', Document);
 const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile, className }, ref)=>{
     const containerRef = useRef(null);

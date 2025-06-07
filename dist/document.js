@@ -26,6 +26,7 @@ class CustomDocumentBlot extends BlockEmbed {
     static create(value) {
         const node = super.create(value);
         node.setAttribute('href', this.sanitize(value.url));
+        node.setAttribute('data-original-url', value.url);
         node.setAttribute('target', '_blank');
         node.setAttribute('title', value.title);
         node.setAttribute('data-size', value.size);
@@ -74,7 +75,7 @@ class CustomDocumentBlot extends BlockEmbed {
     }
     static value(domNode) {
         return {
-            url: domNode.getAttribute('href') || '',
+            url: domNode.getAttribute('data-original-url') || '',
             title: domNode.getAttribute('title') || '',
             size: domNode.getAttribute('data-size') || '',
             type: domNode.getAttribute('data-type') || ''

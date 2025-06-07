@@ -97,12 +97,10 @@ Quill.register('formats/image', Image)
 
 // 注册自定义视频处理器
 const Video = Quill.import('formats/video')
-;(Video as any).sanitize = (url: string) => url
 Quill.register('formats/video', Video)
 
 // 注册自定义文档处理器
 const Document = Quill.import('formats/document')
-;(Document as any).sanitize = (url: string) => url
 Quill.register('formats/document', Document)
 
 interface EditorProps {
