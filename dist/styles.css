@@ -1,0 +1,16 @@
+.text-editor {
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.ql-document {
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.ql-editor {
+  min-height: 300px !important;
+}
+
