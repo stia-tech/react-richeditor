@@ -1,5 +1,10 @@
-import { forwardRef, useEffect, useLayoutEffect, useRef } from 'react'
-import type { ForwardedRef } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import './editor.css'
@@ -105,24 +110,33 @@ interface EditorProps {
   uploadFile: UploadFile
 }
 
+export interface EditorRef {
+  /** 返回内容的 html 文本，注意只包含内容文本，不包含 html 文件头 */
+  geContentHtml: () => string
+}
+
 // Editor is a controlled React component
-const Editor = forwardRef(
-  (
-    { value, onChange, readOnly, uploadFile }: EditorProps,
-    ref: ForwardedRef<Quill>,
-  ) => {
+const Editor = forwardRef<EditorRef, EditorProps>(
+  ({ value, onChange, readOnly, uploadFile }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const onChangeRef = useRef(onChange)
+    const quillRef = useRef<Quill | null>(null)
+
+    useImperativeHandle(ref, () => ({
+      geContentHtml: () => {
+        return quillRef.current?.root.innerHTML || ''
+      },
+    }))
 
     useLayoutEffect(() => {
       onChangeRef.current = onChange
     })
 
     useEffect(() => {
-      if (ref && 'current' in ref) {
-        ref.current?.enable(!readOnly)
+      if (quillRef.current) {
+        quillRef.current.enable(!readOnly)
       }
-    }, [ref, readOnly])
+    }, [readOnly])
 
     useEffect(() => {
       const container = containerRef.current
@@ -239,9 +253,7 @@ const Editor = forwardRef(
         },
       })
 
-      if (ref && 'current' in ref) {
-        ref.current = quill
-      }
+      quillRef.current = quill
 
       // 处理初始值
       if (value) {
@@ -261,27 +273,25 @@ const Editor = forwardRef(
       })
 
       return () => {
-        if (ref && 'current' in ref) {
-          ref.current = null
-        }
+        quillRef.current = null
         container.innerHTML = ''
       }
-    }, [ref])
+    }, [])
 
     // 同步外部 value 到编辑器
     useEffect(() => {
-      if (ref && 'current' in ref && ref.current && value) {
+      if (quillRef.current && value) {
         try {
           const delta = JSON.parse(value)
-          const currentContents = ref.current.getContents()
+          const currentContents = quillRef.current.getContents()
           if (JSON.stringify(currentContents) !== JSON.stringify(delta)) {
-            ref.current.setContents(delta)
+            quillRef.current.setContents(delta)
           }
         } catch (error) {
           console.error('Invalid JSON value:', error)
         }
       }
-    }, [ref, value])
+    }, [value])
 
     return <div ref={containerRef} style={{ backgroundColor: '#fff' }} />
   },

@@ -1,4 +1,3 @@
-import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import './editor.css';
 export type UploadConfig = {
@@ -14,5 +13,9 @@ interface EditorProps {
     readOnly?: boolean;
     uploadFile: UploadFile;
 }
-declare const Editor: import("react").ForwardRefExoticComponent<EditorProps & import("react").RefAttributes<Quill>>;
+export interface EditorRef {
+    /** 返回内容的 html 文本，注意只包含内容文本，不包含 html 文件头 */
+    geContentHtml: () => string;
+}
+declare const Editor: import("react").ForwardRefExoticComponent<EditorProps & import("react").RefAttributes<EditorRef>>;
 export default Editor;

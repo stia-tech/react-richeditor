@@ -1,5 +1,5 @@
 import { jsx } from "react/jsx-runtime";
-import { forwardRef, useEffect, useLayoutEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef } from "react";
 import external_quill_default from "quill";
 import "quill/dist/quill.snow.css";
 import "./editor.css";
@@ -77,13 +77,16 @@ external_quill_default.register('formats/document', Document);
 const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile }, ref)=>{
     const containerRef = useRef(null);
     const onChangeRef = useRef(onChange);
+    const quillRef = useRef(null);
+    useImperativeHandle(ref, ()=>({
+            geContentHtml: ()=>quillRef.current?.root.innerHTML || ''
+        }));
     useLayoutEffect(()=>{
         onChangeRef.current = onChange;
     });
     useEffect(()=>{
-        if (ref && 'current' in ref) ref.current?.enable(!readOnly);
+        if (quillRef.current) quillRef.current.enable(!readOnly);
     }, [
-        ref,
         readOnly
     ]);
     useEffect(()=>{
@@ -262,7 +265,7 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
                 }
             }
         });
-        if (ref && 'current' in ref) ref.current = quill;
+        quillRef.current = quill;
         if (value) try {
             const delta = JSON.parse(value);
             quill.setContents(delta);
@@ -276,22 +279,19 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
             }
         });
         return ()=>{
-            if (ref && 'current' in ref) ref.current = null;
+            quillRef.current = null;
             container.innerHTML = '';
         };
-    }, [
-        ref
-    ]);
+    }, []);
     useEffect(()=>{
-        if (ref && 'current' in ref && ref.current && value) try {
+        if (quillRef.current && value) try {
             const delta = JSON.parse(value);
-            const currentContents = ref.current.getContents();
-            if (JSON.stringify(currentContents) !== JSON.stringify(delta)) ref.current.setContents(delta);
+            const currentContents = quillRef.current.getContents();
+            if (JSON.stringify(currentContents) !== JSON.stringify(delta)) quillRef.current.setContents(delta);
         } catch (error) {
             console.error('Invalid JSON value:', error);
         }
     }, [
-        ref,
         value
     ]);
     return /*#__PURE__*/ jsx("div", {
