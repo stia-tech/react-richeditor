@@ -1,13 +1,15 @@
-import { Quill } from 'react-quill'
-const BlockEmbed = Quill.import('blots/block/embed')
-const Link = Quill.import('formats/link')
+import Quill from 'quill'
+
+// 自定义视频 Blot
+const BlockEmbed = Quill.import('blots/block/embed') as any
+const Link = Quill.import('formats/link') as any
 
 const ATTRIBUTES = ['height', 'width'] as const
 type AttributeType = (typeof ATTRIBUTES)[number]
 
 type Formats = Record<string, string | undefined>
 
-class Video extends BlockEmbed {
+class CustomVideoBlot extends BlockEmbed {
   static create(value: string) {
     const node = super.create(value)
     // 添加video标签所需的属性
@@ -57,8 +59,8 @@ class Video extends BlockEmbed {
     return `<a href="${video}">${video}</a>`
   }
 }
-Video.blotName = 'video'
-Video.className = 'ql-video'
-Video.tagName = 'video'
+CustomVideoBlot.blotName = 'video'
+CustomVideoBlot.className = 'ql-video'
+CustomVideoBlot.tagName = 'video'
 
-export default Video
+export default CustomVideoBlot

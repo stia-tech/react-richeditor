@@ -1,2 +1,3 @@
-export { Button } from './Button'
-export { default as Editor } from './Editor'
+export { Button } from './button'
+export { default as Editor } from './editor'
+export { default as Render } from './render'

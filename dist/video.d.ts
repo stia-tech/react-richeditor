@@ -1,6 +1,6 @@
 declare const BlockEmbed: any;
 type Formats = Record<string, string | undefined>;
-declare class Video extends BlockEmbed {
+declare class CustomVideoBlot extends BlockEmbed {
     static create(value: string): any;
     static formats(domNode: HTMLElement): Formats;
     static sanitize(url: string): string;
@@ -8,4 +8,4 @@ declare class Video extends BlockEmbed {
     format(name: string, value: string | boolean): void;
     html(): string;
 }
-export default Video;
+export default CustomVideoBlot;

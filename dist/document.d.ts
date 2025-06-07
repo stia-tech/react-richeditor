@@ -1,6 +1,7 @@
 declare const BlockEmbed: any;
+import './document.css';
 type Formats = Record<string, string | undefined>;
-declare class Document extends BlockEmbed {
+declare class CustomDocumentBlot extends BlockEmbed {
     static create(value: {
         url: string;
         title: string;
@@ -19,4 +20,4 @@ declare class Document extends BlockEmbed {
     format(name: string, value: string | boolean): void;
     private static getFileIcon;
 }
-export default Document;
+export default CustomDocumentBlot;

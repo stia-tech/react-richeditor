@@ -1,0 +1,8 @@
+.richeditor-render.ql-container {
+  border: none !important;
+
+  & .ql-editor {
+    padding: 0 !important;
+  }
+}
+

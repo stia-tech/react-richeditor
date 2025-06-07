@@ -1,10 +1,11 @@
-import { Quill } from "react-quill";
+import external_quill_default from "quill";
 import file_pdf_js_default from "./assets/file_pdf.js";
 import file_docx_js_default from "./assets/file_docx.js";
 import file_xlsx_js_default from "./assets/file_xlsx.js";
 import file_unknown_js_default from "./assets/file_unknown.js";
-const BlockEmbed = Quill["import"]('blots/block/embed');
-const Link = Quill["import"]('formats/link');
+import "./document.css";
+const BlockEmbed = external_quill_default["import"]('blots/block/embed');
+const Link = external_quill_default["import"]('formats/link');
 const ATTRIBUTES = [
     'title',
     'size',
@@ -21,7 +22,7 @@ const FILE_ICONS = {
     txt: file_unknown_js_default,
     default: file_unknown_js_default
 };
-class Document extends BlockEmbed {
+class CustomDocumentBlot extends BlockEmbed {
     static create(value) {
         const node = super.create(value);
         node.setAttribute('href', this.sanitize(value.url));
@@ -88,8 +89,8 @@ class Document extends BlockEmbed {
         return FILE_ICONS[type.toLowerCase()] || FILE_ICONS.default;
     }
 }
-Document.blotName = 'document';
-Document.className = 'ql-document';
-Document.tagName = 'a';
-const src_document = Document;
+CustomDocumentBlot.blotName = 'document';
+CustomDocumentBlot.className = 'ql-document';
+CustomDocumentBlot.tagName = 'a';
+const src_document = CustomDocumentBlot;
 export { src_document as default };

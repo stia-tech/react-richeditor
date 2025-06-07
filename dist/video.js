@@ -1,11 +1,11 @@
-import { Quill } from "react-quill";
-const BlockEmbed = Quill["import"]('blots/block/embed');
-const Link = Quill["import"]('formats/link');
+import external_quill_default from "quill";
+const BlockEmbed = external_quill_default["import"]('blots/block/embed');
+const Link = external_quill_default["import"]('formats/link');
 const ATTRIBUTES = [
     'height',
     'width'
 ];
-class Video extends BlockEmbed {
+class CustomVideoBlot extends BlockEmbed {
     static create(value) {
         const node = super.create(value);
         node.setAttribute('controls', 'controls');
@@ -37,8 +37,8 @@ class Video extends BlockEmbed {
         return `<a href="${video}">${video}</a>`;
     }
 }
-Video.blotName = 'video';
-Video.className = 'ql-video';
-Video.tagName = 'video';
-const src_video = Video;
+CustomVideoBlot.blotName = 'video';
+CustomVideoBlot.className = 'ql-video';
+CustomVideoBlot.tagName = 'video';
+const src_video = CustomVideoBlot;
 export { src_video as default };

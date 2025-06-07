@@ -1,12 +1,15 @@
-import { Quill } from 'react-quill'
-const BlockEmbed = Quill.import('blots/block/embed')
-const Link = Quill.import('formats/link')
+import Quill from 'quill'
+
+const BlockEmbed = Quill.import('blots/block/embed') as any
+const Link = Quill.import('formats/link') as any
+
 import pdfIcon from './assets/file_pdf.svg'
 import docIcon from './assets/file_docx.svg'
 import xlsIcon from './assets/file_xlsx.svg'
 import pptIcon from './assets/file_unknown.svg'
 import txtIcon from './assets/file_unknown.svg'
 import defaultIcon from './assets/file_unknown.svg'
+import './document.css'
 
 const ATTRIBUTES = ['title', 'size', 'type'] as const
 type AttributeType = (typeof ATTRIBUTES)[number]
@@ -26,7 +29,7 @@ const FILE_ICONS = {
   default: defaultIcon,
 }
 
-class Document extends BlockEmbed {
+class CustomDocumentBlot extends BlockEmbed {
   static create(value: {
     url: string
     title: string
@@ -130,8 +133,8 @@ class Document extends BlockEmbed {
   }
 }
 
-Document.blotName = 'document'
-Document.className = 'ql-document'
-Document.tagName = 'a'
+CustomDocumentBlot.blotName = 'document'
+CustomDocumentBlot.className = 'ql-document'
+CustomDocumentBlot.tagName = 'a'
 
-export default Document
+export default CustomDocumentBlot
