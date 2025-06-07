@@ -1,5 +1,6 @@
 import 'quill/dist/quill.snow.css';
 import './editor.css';
+import 'highlight.js/styles/github-dark.css';
 export type UploadConfig = {
     type: 'image' | 'video' | 'document';
 };
@@ -12,6 +13,7 @@ interface EditorProps {
     onChange?: (value: string) => void;
     readOnly?: boolean;
     uploadFile: UploadFile;
+    className?: string;
 }
 export interface EditorRef {
     /** 返回内容的 html 文本，注意只包含内容文本，不包含 html 文件头 */

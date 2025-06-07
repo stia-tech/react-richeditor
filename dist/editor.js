@@ -6,6 +6,8 @@ import "./editor.css";
 import external_video_js_default from "./video.js";
 import external_document_js_default from "./document.js";
 import { message } from "antd";
+import external_highlight_js_default from "highlight.js";
+import "highlight.js/styles/github-dark.css";
 const MAX_FILE_SIZE = 10485760;
 const MAX_VIDEO_SIZE = 104857600;
 const MAX_IMAGE_SIZE = 3145728;
@@ -74,7 +76,7 @@ external_quill_default.register('formats/video', Video);
 const Document = external_quill_default["import"]('formats/document');
 Document.sanitize = (url)=>url;
 external_quill_default.register('formats/document', Document);
-const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile }, ref)=>{
+const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile, className }, ref)=>{
     const containerRef = useRef(null);
     const onChangeRef = useRef(onChange);
     const quillRef = useRef(null);
@@ -96,6 +98,9 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
         const quill = new external_quill_default(editorContainer, {
             theme: 'snow',
             modules: {
+                syntax: {
+                    hljs: external_highlight_js_default
+                },
                 toolbar: {
                     container: [
                         [
@@ -197,6 +202,12 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
                         ]
                     ],
                     handlers: {
+                        'code-block': function() {
+                            const range = quill.getSelection(true);
+                            quill.formatLine(range.index, 1, 'code-block', 'python');
+                            quill.insertText(range.index + 1, '\n');
+                            onChangeRef.current?.(JSON.stringify(quill.getContents()));
+                        },
                         image: function() {
                             const input = document.createElement('input');
                             input.setAttribute('type', 'file');
@@ -296,6 +307,7 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
     ]);
     return /*#__PURE__*/ jsx("div", {
         ref: containerRef,
+        className: className,
         style: {
             backgroundColor: '#fff'
         }

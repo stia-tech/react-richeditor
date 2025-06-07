@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import './render.css'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github-dark.css'
 
 interface RenderProps {
   value: string // JSON 字符串
@@ -20,6 +22,7 @@ const Render = ({ value }: RenderProps) => {
       readOnly: true,
       modules: {
         toolbar: false, // 不显示工具栏
+        syntax: { hljs },
       },
     })
 

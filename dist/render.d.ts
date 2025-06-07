@@ -1,5 +1,6 @@
 import 'quill/dist/quill.snow.css';
 import './render.css';
+import 'highlight.js/styles/github-dark.css';
 interface RenderProps {
     value: string;
 }

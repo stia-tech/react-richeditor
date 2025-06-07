@@ -11,6 +11,8 @@ import './editor.css'
 import CustomVideoBlot from './video'
 import CustomDocumentBlot from './document'
 import { message } from 'antd'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github-dark.css'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const MAX_VIDEO_SIZE = 100 * 1024 * 1024 // 100MB
@@ -108,6 +110,7 @@ interface EditorProps {
   onChange?: (value: string) => void // 返回 JSON 字符串
   readOnly?: boolean
   uploadFile: UploadFile
+  className?: string
 }
 
 export interface EditorRef {
@@ -117,7 +120,7 @@ export interface EditorRef {
 
 // Editor is a controlled React component
 const Editor = forwardRef<EditorRef, EditorProps>(
-  ({ value, onChange, readOnly, uploadFile }, ref) => {
+  ({ value, onChange, readOnly, uploadFile, className }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const onChangeRef = useRef(onChange)
     const quillRef = useRef<Quill | null>(null)
@@ -148,6 +151,7 @@ const Editor = forwardRef<EditorRef, EditorProps>(
       const quill = new Quill(editorContainer, {
         theme: 'snow',
         modules: {
+          syntax: { hljs },
           toolbar: {
             container: [
               ['bold', 'italic', 'underline', 'strike'],
@@ -166,6 +170,14 @@ const Editor = forwardRef<EditorRef, EditorProps>(
               ['link', 'image', 'video', 'document'],
             ],
             handlers: {
+              'code-block': function () {
+                const range = quill.getSelection(true)
+                quill.formatLine(range.index, 1, 'code-block', 'python')
+                // 在代码块后插入换行并移动光标
+                quill.insertText(range.index + 1, '\n')
+                // 手动触发 onChange
+                onChangeRef.current?.(JSON.stringify(quill.getContents()))
+              },
               image: function () {
                 const input = document.createElement('input')
                 input.setAttribute('type', 'file')
@@ -293,7 +305,13 @@ const Editor = forwardRef<EditorRef, EditorProps>(
       }
     }, [value])
 
-    return <div ref={containerRef} style={{ backgroundColor: '#fff' }} />
+    return (
+      <div
+        ref={containerRef}
+        className={className}
+        style={{ backgroundColor: '#fff' }}
+      />
+    )
   },
 )
 

@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react";
 import external_quill_default from "quill";
 import "quill/dist/quill.snow.css";
 import "./render.css";
+import external_highlight_js_default from "highlight.js";
+import "highlight.js/styles/github-dark.css";
 const Render = ({ value })=>{
     const containerRef = useRef(null);
     useEffect(()=>{
@@ -12,7 +14,10 @@ const Render = ({ value })=>{
             theme: 'snow',
             readOnly: true,
             modules: {
-                toolbar: false
+                toolbar: false,
+                syntax: {
+                    hljs: external_highlight_js_default
+                }
             }
         });
         try {
