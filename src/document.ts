@@ -1,6 +1,12 @@
 import { Quill } from 'react-quill'
 const BlockEmbed = Quill.import('blots/block/embed')
 const Link = Quill.import('formats/link')
+import pdfIcon from './assets/file_pdf.svg'
+import docIcon from './assets/file_docx.svg'
+import xlsIcon from './assets/file_xlsx.svg'
+import pptIcon from './assets/file_unknown.svg'
+import txtIcon from './assets/file_unknown.svg'
+import defaultIcon from './assets/file_unknown.svg'
 
 const ATTRIBUTES = ['title', 'size', 'type'] as const
 type AttributeType = (typeof ATTRIBUTES)[number]
@@ -9,15 +15,15 @@ type Formats = Record<string, string | undefined>
 
 // 文件类型图标映射
 const FILE_ICONS = {
-  pdf: new URL('./assets/file/file_pdf.svg', import.meta.url).href,
-  doc: new URL('./assets/file/file_docx.svg', import.meta.url).href,
-  docx: new URL('./assets/file/file_docx.svg', import.meta.url).href,
-  xls: new URL('./assets/file/file_xlsx.svg', import.meta.url).href,
-  xlsx: new URL('./assets/file/file_xlsx.svg', import.meta.url).href,
-  ppt: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
-  pptx: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
-  txt: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
-  default: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
+  pdf: pdfIcon,
+  doc: docIcon,
+  docx: docIcon,
+  xls: xlsIcon,
+  xlsx: xlsIcon,
+  ppt: pptIcon,
+  pptx: pptIcon,
+  txt: txtIcon,
+  default: defaultIcon,
 }
 
 class Document extends BlockEmbed {

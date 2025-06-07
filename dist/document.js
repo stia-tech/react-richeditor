@@ -1,4 +1,8 @@
 import { Quill } from "react-quill";
+import file_pdf_js_default from "./assets/file_pdf.js";
+import file_docx_js_default from "./assets/file_docx.js";
+import file_xlsx_js_default from "./assets/file_xlsx.js";
+import file_unknown_js_default from "./assets/file_unknown.js";
 const BlockEmbed = Quill["import"]('blots/block/embed');
 const Link = Quill["import"]('formats/link');
 const ATTRIBUTES = [
@@ -7,15 +11,15 @@ const ATTRIBUTES = [
     'type'
 ];
 const FILE_ICONS = {
-    pdf: new URL('./assets/file/file_pdf.svg', import.meta.url).href,
-    doc: new URL('./assets/file/file_docx.svg', import.meta.url).href,
-    docx: new URL('./assets/file/file_docx.svg', import.meta.url).href,
-    xls: new URL('./assets/file/file_xlsx.svg', import.meta.url).href,
-    xlsx: new URL('./assets/file/file_xlsx.svg', import.meta.url).href,
-    ppt: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
-    pptx: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
-    txt: new URL('./assets/file/file_unknown.svg', import.meta.url).href,
-    default: new URL('./assets/file/file_unknown.svg', import.meta.url).href
+    pdf: file_pdf_js_default,
+    doc: file_docx_js_default,
+    docx: file_docx_js_default,
+    xls: file_xlsx_js_default,
+    xlsx: file_xlsx_js_default,
+    ppt: file_unknown_js_default,
+    pptx: file_unknown_js_default,
+    txt: file_unknown_js_default,
+    default: file_unknown_js_default
 };
 class Document extends BlockEmbed {
     static create(value) {
