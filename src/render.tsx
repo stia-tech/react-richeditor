@@ -24,11 +24,15 @@ const Render = ({ value }: RenderProps) => {
     })
 
     try {
-      // 解析 JSON 字符串并设置内容
+      // 尝试解析 JSON 字符串
       const content = JSON.parse(value)
       quill.setContents(content)
-    } catch (error) {
-      console.error('解析内容失败:', error)
+    } catch {
+      // 如果 JSON 解析失败，则认为是 HTML 字符串，直接设置内容
+      const editor = container.querySelector('.ql-editor')
+      if (editor) {
+        editor.innerHTML = value
+      }
     }
 
     return () => {
