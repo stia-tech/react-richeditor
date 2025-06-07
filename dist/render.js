@@ -18,8 +18,9 @@ const Render = ({ value })=>{
         try {
             const content = JSON.parse(value);
             quill.setContents(content);
-        } catch (error) {
-            console.error("\u89E3\u6790\u5185\u5BB9\u5931\u8D25:", error);
+        } catch  {
+            const editor = container.querySelector('.ql-editor');
+            if (editor) editor.innerHTML = value;
         }
         return ()=>{
             const editor = container.querySelector('.ql-editor');
