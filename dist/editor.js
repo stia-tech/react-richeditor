@@ -8,6 +8,7 @@ import external_document_js_default from "./document.js";
 import { message } from "antd";
 import external_highlight_js_default from "highlight.js";
 import "highlight.js/styles/github-dark.css";
+import external_quill_resize_image_default from "quill-resize-image";
 const MAX_FILE_SIZE = 10485760;
 const MAX_VIDEO_SIZE = 104857600;
 const MAX_IMAGE_SIZE = 3145728;
@@ -74,6 +75,7 @@ const Video = external_quill_default["import"]('formats/video');
 external_quill_default.register('formats/video', Video);
 const Document = external_quill_default["import"]('formats/document');
 external_quill_default.register('formats/document', Document);
+external_quill_default.register('modules/resize', external_quill_resize_image_default);
 const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile, className }, ref)=>{
     const containerRef = useRef(null);
     const onChangeRef = useRef(onChange);
@@ -271,6 +273,9 @@ const Editor = /*#__PURE__*/ forwardRef(({ value, onChange, readOnly, uploadFile
                             };
                         }
                     }
+                },
+                resize: {
+                    locale: {}
                 }
             }
         });

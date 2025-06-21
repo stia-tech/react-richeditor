@@ -11,6 +11,9 @@ importers:
       '@ant-design/icons':
         specifier: ^5.6.1
         version: 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@botom/quill-resize-module':
+        specifier: ^2.0.1
+        version: 2.0.1
       '@types/react':
         specifier: ^18.3.23
         version: 18.3.23
@@ -165,6 +168,9 @@ packages:
   '@babel/runtime@7.27.6':
     resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
+
+  '@botom/quill-resize-module@2.0.1':
+    resolution: {integrity: sha512-qaaAApFioSjr0hCsUZt0bJJjzD6qYCgWyZ3AgswDfulqDTtOK8lvc0CSMzE+oe75oG8Z58Cyr2dEgtVmzmn6gA==}
 
   '@emotion/hash@0.8.0':
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
@@ -1826,6 +1832,8 @@ snapshots:
       '@ast-grep/napi-win32-x64-msvc': 0.37.0
 
   '@babel/runtime@7.27.6': {}
+
+  '@botom/quill-resize-module@2.0.1': {}
 
   '@emotion/hash@0.8.0': {}
 

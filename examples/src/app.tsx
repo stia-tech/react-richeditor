@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Editor, Render } from 'react-richeditor'
 
 function App() {
   const [content, setContent] = useState(undefined as string | undefined)
+
+  useEffect(() => {
+    console.log(content)
+  }, [content])
 
   return <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
     <Editor
