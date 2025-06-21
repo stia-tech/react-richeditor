@@ -13,7 +13,7 @@ import CustomDocumentBlot from './document'
 import { message } from 'antd'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
-import ResizeModule from '@botom/quill-resize-module'
+import BlotFormatter2, { ImageSpec } from '@enzedonline/quill-blot-formatter2'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const MAX_VIDEO_SIZE = 100 * 1024 * 1024 // 100MB
@@ -104,7 +104,7 @@ Quill.register('formats/video', Video)
 const Document = Quill.import('formats/document')
 Quill.register('formats/document', Document)
 
-Quill.register('modules/resize', ResizeModule)
+Quill.register('modules/blotFormatter2', BlotFormatter2);
 
 interface EditorProps {
   value?: string // JSON 字符串
@@ -263,13 +263,25 @@ const Editor = forwardRef<EditorRef, EditorProps>(
               },
             },
           },
-          resize: {
-            locale: {
-              altTip: 'Hold alt to scale',
-              center: 'Center',
-              restore: 'Restore',
+          blotFormatter2: {
+            image: {
+              allowAltTitleEdit: false,
             },
-            toolbar: { sizeTools: true, alingTools: true }, // optional
+            overlay: {
+              style: {
+                border: '1px dashed red',
+              },
+            },
+            resize: {
+              allowResizing: true,
+            },
+            align: {
+              allowAligning: true,
+              alignments: ['left', 'center', 'right']
+            },
+            delete: {
+              allowKeyboardDelete: true,
+            },
           },
         },
       })
