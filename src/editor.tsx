@@ -13,6 +13,7 @@ import CustomDocumentBlot from './document'
 import { message } from 'antd'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
+import QuillResizeImage from 'quill-resize-image'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const MAX_VIDEO_SIZE = 100 * 1024 * 1024 // 100MB
@@ -102,6 +103,8 @@ Quill.register('formats/video', Video)
 // 注册自定义文档处理器
 const Document = Quill.import('formats/document')
 Quill.register('formats/document', Document)
+
+Quill.register('modules/resize', QuillResizeImage)
 
 interface EditorProps {
   value?: string // JSON 字符串
@@ -259,6 +262,9 @@ const Editor = forwardRef<EditorRef, EditorProps>(
                 }
               },
             },
+          },
+          resize: {
+            locale: {},
           },
         },
       })
